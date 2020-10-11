@@ -234,17 +234,17 @@ def new_transfer_processing(request): #complete, not tested
                 req_amount = Decimal(request.POST["amount"])
                 if req_amount > acc_to_debit.acc_balance:
 
-                    messages.error(request,"f'{req_amount} exceeds transaction of RDPP {acc_to_debit.name} (DBT {acc_to_debit.acc_balance})'")
+                    messages.error(request,f'{req_amount} exceeds transaction of RDPP {acc_to_debit.name} (DBT {acc_to_debit.acc_balance})')
                     # raise ValidationError(f'{trans_debit.amount} in addition with previous total {total_debit["amount__sum"]} exceeds transaction of RDPP {trans_debit.debit_acc} (DBT {trans_debit.debit_acc.acc_balance})')
                     return redirect("/transaction/transfers/new")
                 
                 elif req_amount + acc_to_debit.acc_balance > acc_to_debit.alloted:  
-                    messages.error(request,"f'{req_amount}  in addition with previous total exceeds total allotment of RDPP {acc_to_debit.name} (DBT {acc_to_debit.alloted})'")
+                    messages.error(request,f'{req_amount}  in addition with previous total exceeds total allotment of RDPP {acc_to_debit.name} (DBT {acc_to_debit.alloted})')
                     # raise ValidationError(f'{trans_debit.amount} in addition with previous total {total_debit["amount__sum"]} exceeds transaction of RDPP {trans_debit.debit_acc} (DBT {trans_debit.debit_acc.alloted})')
                     return redirect("/transaction/transfers/new")
 
                 elif req_amount + acc_to_credit.acc_balance > acc_to_credit.alloted:
-                    messages.error(request,"f'{req_amount}  in addition with previous total exceeds total allotment of RDPP {acc_to_credit.name} (DBT {acc_to_credit.alloted})'")
+                    messages.error(request,f'{req_amount}  in addition with previous total exceeds total allotment of RDPP {acc_to_credit.name} (DBT {acc_to_credit.alloted})')
                     return redirect("/transaction/transfers/new")
                     # raise ValidationError(f'{transfer.amount}  Money Receive====== n addition with previous total {total["amount__sum"]} exceeds transaction of RDPP {transfer.credit_acc} (DBT {transfer.credit_acc.alloted})')
                 
