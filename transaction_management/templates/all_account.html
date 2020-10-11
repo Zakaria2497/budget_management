@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>DnD - All Accounts</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> 
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'dashboard.css' %}">
+</head>
+<body>
+    <div style="background-color:black;" id="container">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="/transaction/dashboard">Home</a>
+                    </li>
+                </ul>
+                
+            </div>
+        </nav>
+
+        <div id="main_wrapper">
+                <div class="card">
+                    <h5 class="card-header">Budget Overview</h5>
+
+                    <div class="zaka" style="margin-top: 10px;">
+                
+                        <form class="example" action="/transaction/accounts" style="max-width:300px; margin-left: 75%;" method="POST">
+                            {% csrf_token %}
+                            <input type="text" placeholder="Search.." name="search">
+                            <button type="submit"><i class="fa fa-search"></i></button>
+                        </form>
+                    </div>
+                    
+                        <div class="card-body">
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">RDPP Heads</th>
+                                        <th scope="col">RDPP Allotment</th>
+                                        <th scope="col">Actual Fund Received</th>
+                                        <!-- <th scope="col">Last adjustment</th> -->
+                                        <th scope="col">Fund Adjustment</th>
+                                        <th scope="col">Fund Available After Adjustment</th>
+                                        <th scope="col" width=200px>Action</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+                                    {% for account in all_accounts %}
+                                        <tr>
+                                            <td>{{account.name}}</td>
+                                            <td>{{account.alloted}}</td>
+                                            <td>{{account.actual_recieved}}</td>
+                                            <!-- <td>{{account.amount}}</td> -->
+                                            <td>{{account.adjusted}}</td>
+                                            <td>{{account.total_after_adjustment}}</td>
+                                            <td>
+                                                <a href="/transaction/accounts/view/{{account.id}}"><button class="button button1">View</button></a>
+                                                <a href="/transaction/accounts/edit/{{account.id}}"><button class="button button2">Edit</button></a>
+                                                <a href="/transaction/accounts/delete/{{account.id}}"><button class="button button3">Delete</button></a>
+                                        
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    
+            
+                        <div style="margin-left: 5%;">
+                            <a href="/transaction/accounts/add" class="btn btn-primary" style="margin-bottom:3%;">Add New Budget</a>
+                        </div> 
+                </div>
+        </div>    
+                         
+    </div>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+</body>
+</html>

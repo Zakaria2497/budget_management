@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>DnD - All Accounts</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'dashboard.css' %}">
+</head>
+<body>
+    <div style="background-color:black;" id="container">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+     
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="/transaction/dashboard">Home</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
+        <div id="main_wrapper">
+                <div class="card">
+                    <h5 class="card-header">Budget Overview</h5>
+                        <div class="card-body">
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">RDPP Heads</th>
+                                        <th scope="col">RDPP Allotment</th>
+                                        <th scope="col">Actual Fund Received</th>
+                                        <th scope="col">Last adjustment</th>
+                                        <th scope="col">Fund Adjustment</th>
+                                        <th scope="col">Fund Available After Adjustment</th>
+                                        
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+                
+                                        <tr>
+                                            <td>{{acc_to_edit.name}}</td>
+                                            <td>{{acc_to_edit.alloted}}</td>
+                                            <td>{{acc_to_edit.actual_recieved}}</td>
+                                            <td>{{acc_to_edit.amount}}</td>
+                                            <td>{{acc_to_edit.adjusted}}</td>
+                                            <td>{{acc_to_edit.acc_balance}}</td>                                          
+                                </tbody>
+                            </table>
+                        </div>
+                    
+                        <div class="card z-depth-0 bordered mb-0">
+                            <div class="card-header" id="headingOne2">
+                                <h5 class="mb-0">
+                                    <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseOne2"
+                                    aria-expanded="true" aria-controls="collapseOne2">
+                                    Edit Budget
+                                    </button>
+                                </h5>
+                            </div>
+
+                            <div class="accordion" id="accordionExample275"></div>
+
+                            <div id="collapseOne2" class="collapse" aria-labelledby="headingOne2" data-parent="#accordionExample275">
+                                <div class="card-body">
+                                    <form action="/transaction/accounts/edit/processing/{{acc_to_edit.id}}" method="POST">
+                                        {% csrf_token %}
+                                    
+                                        <div class="form-group">
+                                            <label>RDPP Head:</label>
+                                            <input type="text" name="name">
+                                        </div> 
+
+                                        <div class="form-group"></div>
+
+                                        <div class="form-group">
+                                            <label>RDPP Allotment: </label>
+                                            <input type="number" name="alloted">
+                                        </div>
+
+                                        <div class="form-group"></div>
+
+                                        <div class="form-group">
+                                            <label>Actual Fund Received: </label>
+                                            <input type="number" name="actual_recieved">
+                                        </div>
+
+                                        <button type="submit" class="btn btn-success">Submit</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>        
+                </div>
+
+                <div class="card">
+                    <h5 class="card-header">Revise History</h5>
+                        <div class="card-body">  
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">RDPP Heads</th>
+                                        <th scope="col">RDPP Allotment</th> 
+                                        <th scope="col">Actual Fund Received</th>
+                                        <th scope="col">Date</th>
+                                        <th scope="col">Edited Name</th>
+                                        <!-- <th scope="col">Fund Adjustment</th> -->
+                                        <!-- <th scope="col">Fund Available After Adjustment</th> -->
+                                        
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+                                    {% for history in all_history %}
+                                    <tr>
+                                        <td>{{history.account.name}}</td>
+                                        <td>{{history.alloted}}</td>
+                                        <td>{{history.actual_recieved}}</td>
+                                        <td>{{history.updated_at}}</td>
+                                        <td>{{history.update_name}}</td>
+                                        <!-- <td>{{history.acc_balance}}</td>-->
+                                    </tr>     
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>        
+                </div>  
+
+
+
+        </div>                 
+    </div>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+</body>
+</html>
